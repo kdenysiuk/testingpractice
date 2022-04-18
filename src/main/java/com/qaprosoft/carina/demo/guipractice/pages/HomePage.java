@@ -9,6 +9,7 @@ import com.qaprosoft.carina.core.foundation.utils.Configuration;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.qaprosoft.carina.demo.guipractice.components.Product;
 
 public class HomePage extends AbstractPage {
 
@@ -19,10 +20,10 @@ public class HomePage extends AbstractPage {
 	}
 	
 	@FindBy(xpath = "//*(@id, 'tbodyid')")
-	private List<ExtendedWebElement> products;
+	private List<Product> products;
 	
 	public ProductPage openProduct(String productString) {
-		for (ExtendedWebElement product : products) {
+		for (Product product : products) {
             String currentProduct = product.getText();
             if ((productString).equalsIgnoreCase(currentProduct)) {
                 product.click();
