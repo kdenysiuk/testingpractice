@@ -25,4 +25,5 @@ public class CartPage extends AbstractPage {
 		placeOrderButton.click();
 		return new PurchasePage(driver);
 	}
+
 }

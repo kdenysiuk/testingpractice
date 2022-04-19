@@ -15,7 +15,7 @@ public class LogInPage extends AbstractPage {
 	private ExtendedWebElement loginPasswordField;
 
 	@FindBy(xpath = "//*[@onclick = 'logIn()']")
-	private ExtendedWebElement loginButton2;
+	private ExtendedWebElement loginButton;
 
 	public LogInPage(WebDriver driver) {
 		super(driver);
@@ -29,8 +29,8 @@ public class LogInPage extends AbstractPage {
 		loginPasswordField.type(password);
 	}
 
-	public void acceptPurchase() {
-		loginButton2.click();
+	public void clickLoginButton() {
+		loginButton.click();
 	}
 
 }

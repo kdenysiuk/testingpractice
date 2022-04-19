@@ -8,17 +8,29 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class SignUpPage extends AbstractPage {
 
+	@FindBy(xpath = "//*[@id = 'sign-username']")
+	private ExtendedWebElement usernameField;
+
+	@FindBy(xpath = "//*[@id = 'sign-password']")
+	private ExtendedWebElement passwordField;
+
+	@FindBy(xpath = "//*[@onclick = 'register()']")
+	private ExtendedWebElement signinButton;
+
 	public SignUpPage(WebDriver driver) {
 		super(driver);
 	}
-	
-	@FindBy(xpath = "//*[@id = 'sign-username']")
-	private ExtendedWebElement usernameField;
-	
-	@FindBy(xpath = "//*[@id = 'sign-password']")
-	private ExtendedWebElement signinPasswordField;
-	
-	@FindBy(xpath = "//*[@onclick = 'register()']")
-	private ExtendedWebElement signinConfirmButton;
+
+	public void fillUsernameField(String username) {
+		usernameField.type(username);
+	}
+
+	public void fillSigninField(String password) {
+		passwordField.type(password);
+	}
+
+	public void clickSigninButton() {
+		signinButton.click();
+	}
 
 }

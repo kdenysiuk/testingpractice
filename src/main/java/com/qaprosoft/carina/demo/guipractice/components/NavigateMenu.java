@@ -14,36 +14,55 @@ public class NavigateMenu extends AbstractUIObject {
 	@FindBy(xpath = "//a[@id = 'login2']")
 	private ExtendedWebElement loginButton;
 
-	@FindBy(id = "//a[@id = 'signin2']")
+	@FindBy(xpath = "//a[@id = 'signin2']")
 	private ExtendedWebElement signinButton;
 
-	@FindBy(id = "//a[@id = 'logout2']")
+	@FindBy(xpath = "//a[@id = 'logout2']")
 	private ExtendedWebElement logoutButton;
 
-	@FindBy(id = "//a[@id = 'cartur']")
+	@FindBy(xpath = "//a[@id = 'cartur']")
 	private ExtendedWebElement cartButton;
+
+	@FindBy(xpath = "//a[@id = 'nameofuser']")
+	private ExtendedWebElement welcomeLabel;
 
 	public NavigateMenu(WebDriver driver) {
 		super(driver);
 	}
 
-	public LogInPage openLogIn() {
+	public LogInPage clickLogInButton() {
 		loginButton.click();
 		return new LogInPage(driver);
 	}
 
-	public SignUpPage openSignUp() {
+	public SignUpPage clickSigninButton() {
 		signinButton.click();
 		return new SignUpPage(driver);
 	}
 
-	public void logOut() {
+	public void clickLogoutButton() {
 		logoutButton.click();
 	}
 
-	public CartPage openCart() {
+	public CartPage clickCartButton() {
 		cartButton.click();
 		return new CartPage(driver);
+	}
+
+	public Boolean isLoginButtonPresent() {
+		return loginButton.isPresent();
+	}
+
+	public Boolean isSigninButtonPresent() {
+		return signinButton.isPresent();
+	}
+
+	public Boolean isLogoutButtonPresent() {
+		return logoutButton.isPresent();
+	}
+
+	public Boolean isWelcomeLabelPresent() {
+		return welcomeLabel.isPresent();
 	}
 
 }

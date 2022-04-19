@@ -8,8 +8,6 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class PurchasePage extends AbstractPage {
 
-
-
 	@FindBy(xpath = "//*[@id = 'name']")
 	private ExtendedWebElement nameField;
 
@@ -33,7 +31,7 @@ public class PurchasePage extends AbstractPage {
 
 	@FindBy(xpath = "//*[@class = 'confirm btn btn-lg btn-primary']")
 	private ExtendedWebElement okButton;
-	
+
 	public PurchasePage(WebDriver driver) {
 		super(driver);
 	}
