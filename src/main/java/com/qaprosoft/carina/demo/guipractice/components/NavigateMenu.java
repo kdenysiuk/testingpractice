@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.gui.AbstractUIObject;
 import com.qaprosoft.carina.demo.guipractice.pages.CartPage;
+import com.qaprosoft.carina.demo.guipractice.pages.LogInPage;
+import com.qaprosoft.carina.demo.guipractice.pages.SignUpPage;
 
 public class NavigateMenu extends AbstractUIObject {
 
@@ -13,35 +15,31 @@ public class NavigateMenu extends AbstractUIObject {
 		super(driver);
 	}
 	
-	@FindBy(id = "signin2")
-	private ExtendedWebElement signinButton;
-	
-	@FindBy(id = "sign-username")
-	private ExtendedWebElement usernameField;
-	
-	@FindBy(id = "sign-password")
-	private ExtendedWebElement signinPasswordField;
-	
-	@FindBy(xpath = "//div[@class = 'btn btn-primary']")
-	private ExtendedWebElement signinConfirmButton;
-	
-	@FindBy(id = "login2")
+	@FindBy(xpath = "//a[@id = 'login2']")
 	private ExtendedWebElement loginButton;
 	
-	@FindBy(id = "loginusername")
-	private ExtendedWebElement loginUsernameField;
+	@FindBy(id = "//a[@id = 'signin2']")
+	private ExtendedWebElement signinButton;
 	
-	@FindBy(id = "loginpassword")
-	private ExtendedWebElement loginPasswordField;
-	
-	@FindBy(xpath = "//div[@class = 'btn btn-primary']")
-	private ExtendedWebElement loginButton2;
-	
-	@FindBy(id = "logout2")
+	@FindBy(id = "//a[@id = 'logout2']")
 	private ExtendedWebElement logoutButton;
 	
-	@FindBy(id = "cartur")
+	@FindBy(id = "//a[@id = 'cartur']")
 	private ExtendedWebElement cartButton;
+	
+	public LogInPage openLogIn() {
+		loginButton.click();
+		return new LogInPage(driver);
+	}
+	
+	public SignUpPage openSignUp() {
+		signinButton.click();
+		return new SignUpPage(driver);
+	}
+	
+	public void logOut() {
+		logoutButton.click();
+	}
 	
 	public CartPage openCart() {
 		cartButton.click();

@@ -4,15 +4,13 @@ import org.openqa.selenium.WebDriver;
 
 import com.qaprosoft.carina.core.gui.AbstractUIObject;
 
-public class Product extends AbstractUIObject{
+public class ProductInCart extends AbstractUIObject{
 
-	public Product(WebDriver driver) {
+	public ProductInCart(WebDriver driver) {
 		super(driver);
 	}
 
 	public void click() {
-		
 	}
 
-	
 }

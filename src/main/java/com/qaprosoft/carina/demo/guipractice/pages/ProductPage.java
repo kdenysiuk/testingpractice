@@ -12,9 +12,12 @@ public class ProductPage extends AbstractPage {
 		super(driver);
 	}
 	
-	@FindBy(xpath = "//div[@class = 'btn btn-success btn-lgn']")
+	@FindBy(xpath = "//*[@id = 'tbodyid']//a")
 	private ExtendedWebElement addToCartButton;
 	
+	public void addToCartButton() {
+		addToCartButton.click();
+	}
 }
 
 
