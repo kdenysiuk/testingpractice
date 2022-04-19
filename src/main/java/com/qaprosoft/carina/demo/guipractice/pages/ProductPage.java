@@ -8,16 +8,14 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class ProductPage extends AbstractPage {
 
+	@FindBy(xpath = "//*[@id = 'tbodyid']//a")
+	private ExtendedWebElement addToCartButton;
+
 	public ProductPage(WebDriver driver) {
 		super(driver);
 	}
-	
-	@FindBy(xpath = "//*[@id = 'tbodyid']//a")
-	private ExtendedWebElement addToCartButton;
-	
-	public void addToCartButton() {
+
+	public void clickaddToCartButton() {
 		addToCartButton.click();
 	}
 }
-
-

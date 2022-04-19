@@ -12,30 +12,29 @@ import com.qaprosoft.carina.demo.guipractice.components.NavigateMenu;
 import com.qaprosoft.carina.demo.guipractice.components.Product;
 
 public class HomePage extends AbstractPage {
-	
+
 	@FindBy(xpath = "//nav[@id = 'narvbarx']")
 	private NavigateMenu navigateMenu;
-	
+
 	@FindBy(xpath = "//*[@id = 'tbodyid']")
 	private List<Product> products;
 
-	//constructor
+	// constructor
 	public HomePage(WebDriver driver) {
 		super(driver);
 		setPageAbsoluteURL(R.CONFIG.get(Configuration.Parameter.URL.getKey()));
 	}
-	
-	public ProductPage openProduct(String productString) {
+
+	public ProductPage clickProduct(String productString) {
 		for (Product product : products) {
-            String currentProduct = product.getTitle();
-            if ((productString).equalsIgnoreCase(currentProduct)) {
-                product.click();
-                return new ProductPage(driver);
-            }
-        }
+			String currentProduct = product.getProductTitle();
+			if ((productString).equalsIgnoreCase(currentProduct)) {
+				return product.clickProductTitle();
+			}
+		}
 		throw new RuntimeException(productString);
 	}
-	
+
 	public NavigateMenu getNavigateMenu() {
 		return new NavigateMenu(driver);
 	}

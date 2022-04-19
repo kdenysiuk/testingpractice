@@ -8,49 +8,66 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class PurchasePage extends AbstractPage {
 
-	public PurchasePage(WebDriver driver) {
-		super(driver);
-	}
-	
+
+
 	@FindBy(xpath = "//*[@id = 'name']")
 	private ExtendedWebElement nameField;
-	
+
 	@FindBy(xpath = "//*[@id = 'country']")
 	private ExtendedWebElement countryField;
-	
+
 	@FindBy(xpath = "//*[@id = 'city']")
 	private ExtendedWebElement cityField;
-	
+
 	@FindBy(xpath = "//*[@id = 'card']")
 	private ExtendedWebElement cardField;
-	
+
 	@FindBy(xpath = "//*[@id = 'month']")
 	private ExtendedWebElement monthField;
-	
+
 	@FindBy(xpath = "//*[@id = 'year']")
 	private ExtendedWebElement yearField;
-	
+
 	@FindBy(xpath = "//*[@onclick = 'purchaseOrder()']")
 	private ExtendedWebElement purchaseButton;
-	
+
 	@FindBy(xpath = "//*[@class = 'confirm btn btn-lg btn-primary']")
 	private ExtendedWebElement okButton;
 	
-    public void confirmPurchase() {
-    	purchaseButton.click();
-    }
-    
-	public void fillFields(String name, String country, String city, String card, String month, String year) {
-        nameField.type(name);
-        countryField.type(country);
-        cityField.type(city);
-        cardField.type(card);
-        monthField.type(month);
-        yearField.type(year);
-    }
-	
-	public void acceptPurchase() {
-    	okButton.click();
-    }
+	public PurchasePage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void clickPurchaseButton() {
+		purchaseButton.click();
+	}
+
+	public void fillNameField(String name) {
+		nameField.type(name);
+	}
+
+	public void fillCountryField(String country) {
+		countryField.type(country);
+	}
+
+	public void fillCityField(String city) {
+		cityField.type(city);
+	}
+
+	public void fillCardField(String card) {
+		cardField.type(card);
+	}
+
+	public void fillMonthField(String month) {
+		monthField.type(month);
+	}
+
+	public void fillYearField(String year) {
+		yearField.type(year);
+	}
+
+	public void clickOkButton() {
+		okButton.click();
+	}
 
 }

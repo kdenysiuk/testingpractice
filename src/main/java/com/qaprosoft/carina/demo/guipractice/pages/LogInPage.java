@@ -8,27 +8,29 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 
 public class LogInPage extends AbstractPage {
 
-
 	@FindBy(xpath = "//*[@id = 'loginusername']")
 	private ExtendedWebElement loginUsernameField;
-	
+
 	@FindBy(xpath = "//*[@id = 'loginpassword']")
 	private ExtendedWebElement loginPasswordField;
-	
+
 	@FindBy(xpath = "//*[@onclick = 'logIn()']")
 	private ExtendedWebElement loginButton2;
-	
+
 	public LogInPage(WebDriver driver) {
 		super(driver);
 	}
-	
-	public void fillFields(String username, String password) {
-        loginUsernameField.type(username);
-        loginPasswordField.type(password);
-    }
-	
+
+	public void fillUsernameField(String username) {
+		loginUsernameField.type(username);
+	}
+
+	public void fillPasswordField(String password) {
+		loginPasswordField.type(password);
+	}
+
 	public void acceptPurchase() {
-    	loginButton2.click();
-    }
+		loginButton2.click();
+	}
 
 }
