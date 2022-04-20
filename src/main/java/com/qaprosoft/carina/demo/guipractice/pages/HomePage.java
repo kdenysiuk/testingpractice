@@ -16,7 +16,7 @@ public class HomePage extends AbstractPage {
 	@FindBy(xpath = "//nav[@id = 'narvbarx']")
 	private NavigateMenu navigateMenu;
 
-	@FindBy(xpath = "//*[@id = 'tbodyid']")
+	@FindBy(xpath = "//*[@id = 'tbodyid']//div[@class = 'col-lg-4 col-md-6 mb-4']")
 	private List<Product> products;
 
 	// constructor
@@ -36,7 +36,7 @@ public class HomePage extends AbstractPage {
 	}
 
 	public NavigateMenu getNavigateMenu() {
-		return new NavigateMenu(driver);
+		return navigateMenu;
 	}
 
 }

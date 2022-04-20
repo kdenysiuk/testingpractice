@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.guipractice.components;
 
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -15,8 +16,8 @@ public class Product extends AbstractUIObject {
 	@FindBy(xpath = "//div[@class = 'card-block']/h5")
 	private ExtendedWebElement productPrice;
 
-	public Product(WebDriver driver) {
-		super(driver);
+	public Product(WebDriver driver, SearchContext searchContext) {
+		super(driver, searchContext);
 	}
 
 	public String getProductTitle() {

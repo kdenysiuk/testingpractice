@@ -1,11 +1,13 @@
 package com.qaprosoft.carina.demo.guipractice.components;
 
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.gui.AbstractUIObject;
 import com.qaprosoft.carina.demo.guipractice.pages.CartPage;
+import com.qaprosoft.carina.demo.guipractice.pages.ContactPage;
 import com.qaprosoft.carina.demo.guipractice.pages.LogInPage;
 import com.qaprosoft.carina.demo.guipractice.pages.SignUpPage;
 
@@ -26,8 +28,11 @@ public class NavigateMenu extends AbstractUIObject {
 	@FindBy(xpath = "//a[@id = 'nameofuser']")
 	private ExtendedWebElement welcomeLabel;
 
-	public NavigateMenu(WebDriver driver) {
-		super(driver);
+	@FindBy(xpath = "//a[@data-target = '#exampleModal']")
+	private ExtendedWebElement contactButton;
+
+	public NavigateMenu(WebDriver driver, SearchContext searchContext) {
+		super(driver, searchContext);
 	}
 
 	public LogInPage clickLogInButton() {
@@ -63,6 +68,11 @@ public class NavigateMenu extends AbstractUIObject {
 
 	public Boolean isWelcomeLabelPresent() {
 		return welcomeLabel.isPresent();
+	}
+
+	public ContactPage clickContactButton() {
+		contactButton.click();
+		return new ContactPage(driver);
 	}
 
 }

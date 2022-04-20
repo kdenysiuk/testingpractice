@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.guipractice.components;
 
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -11,14 +12,14 @@ public class ProductInCart extends AbstractUIObject {
 	@FindBy(xpath = "//tbody[@id='tbodyid']/tr/td[2]")
 	private ExtendedWebElement productTitle;
 
-	@FindBy(xpath = "//tbody[@id='tbodyid']/tr/td32]")
+	@FindBy(xpath = "//tbody[@id='tbodyid']/tr/td[3]")
 	private ExtendedWebElement productPrice;
 
 	@FindBy(xpath = "//tbody[@id='tbodyid']/tr/td/a")
 	private ExtendedWebElement deleteButton;
 
-	public ProductInCart(WebDriver driver) {
-		super(driver);
+	public ProductInCart(WebDriver driver, SearchContext searchContext) {
+		super(driver, searchContext);
 	}
 
 	public String getProductTitle() {
