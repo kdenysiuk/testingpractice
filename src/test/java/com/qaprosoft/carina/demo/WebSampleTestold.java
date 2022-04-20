@@ -43,7 +43,7 @@ import com.qaprosoft.carina.demo.gui.pages.NewsPage;
  *
  * @author qpsdemo
  */
-public class WebSampleTest implements IAbstractTest {
+public class WebSampleTestold implements IAbstractTest {
     @Test()
     @MethodOwner(owner = "qpsdemo")
     @TestPriority(Priority.P3)
