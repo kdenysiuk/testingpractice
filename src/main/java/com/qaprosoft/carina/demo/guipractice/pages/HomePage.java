@@ -16,7 +16,7 @@ public class HomePage extends AbstractPage {
 	@FindBy(xpath = "//nav[@id = 'narvbarx']")
 	private NavigateMenu navigateMenu;
 
-	@FindBy(xpath = "//*[@id = 'tbodyid']//div[@class = 'col-lg-4 col-md-6 mb-4']")
+	@FindBy(xpath = "//div[contains(@class, 'card ')]")
 	private List<Product> products;
 
 	// constructor
