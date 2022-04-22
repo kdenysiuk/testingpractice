@@ -1,4 +1,4 @@
-package com.qaprosoft.carina.demo.regression.dataprovider;
+package com.qaprosoft.carina.demo;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -25,7 +25,7 @@ public class WebSampleTest implements IAbstractTest{
 		SignUpPage signUpPage = navigateMenu.clickSigninButton();
 		
 		//Create an account
-		signUpPage.fillUsernameField("KeithDenysiuk");
+		signUpPage.fillUsernameField("KeithDenysiukgqqqqq");
 		signUpPage.fillPasswordField("12345678");
 		signUpPage.clickSigninButton();
 	}
