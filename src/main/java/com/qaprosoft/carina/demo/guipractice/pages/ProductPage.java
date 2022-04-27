@@ -24,6 +24,8 @@ public class ProductPage extends AbstractPage {
 		super(driver);
 	}
 
+	public boolean isPresentAddToCartButton() { return addToCartButton.isPresent(); }
+
 	public void clickAddToCartButton() {
 		addToCartButton.click();
 	}
