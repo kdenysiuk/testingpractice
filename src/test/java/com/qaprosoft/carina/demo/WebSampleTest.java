@@ -35,7 +35,6 @@ public class WebSampleTest implements IAbstractTest{
 		//Assert of alert label
 		Assert.assertEquals(getDriver().switchTo().alert().getText(), "Sign up successful.", "Alert is wrong");
 		getDriver().switchTo().alert().accept();
-
 	}
 
 	@Test
@@ -61,7 +60,7 @@ public class WebSampleTest implements IAbstractTest{
 		Assert.assertTrue(navigateMenu.isWelcomeLabelPresent(), "The welcome label is not present.");
 		Assert.assertTrue(navigateMenu.isLogoutButtonPresent(), "The log out button is not present.");
 		//the next statement was added because without it, the test crashes saying "log out button is not clickable"
-		Assert.assertTrue(navigateMenu.isLogoutButtonClieckable(), "The log out button is not clickable.");
+		Assert.assertTrue(navigateMenu.isLogoutButtonClickable(), "The log out button is not clickable.");
 
 		//Log out
 		navigateMenu.clickLogoutButton();
@@ -86,12 +85,13 @@ public class WebSampleTest implements IAbstractTest{
 		logInPage.fillUsernameField(R.TESTDATA.get("user_profile"));
 		logInPage.fillPasswordField(R.TESTDATA.get("user_password"));
 		logInPage.clickLoginButton();
+		homePage.open();
 
 		//Select Product
 		ProductPage productPage = homePage.clickProduct("Samsung galaxy s6");
 		//Verify specifications
 		Assert.assertEquals(productPage.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
-		Assert.assertEquals(productPage.getProductPrice(), "$360", "Incorrect Specification");
+		Assert.assertEquals(productPage.getProductPrice(), "$360 *includes tax", "Incorrect Specification");
 		Assert.assertEquals(productPage.getProductDescription(), "The Samsung Galaxy S6 is powered by 1.5GHz octa-core Samsung Exynos 7420 processor and it comes with 3GB of RAM. The phone packs 32GB of internal storage cannot be expanded.", "Incorrect Specification");
 		//Add to cart
 		Assert.assertTrue(productPage.isPresentAddToCartButton(), "The \"Add To Cart\" is not present.");
@@ -100,13 +100,12 @@ public class WebSampleTest implements IAbstractTest{
 		getDriver().switchTo().alert().accept();
 
 		//Go to cart
-		Assert.assertTrue(productPage.isPresentAddToCartButton(), "The \"Add To Cart\" is not present.");
-		navigateMenu.clickCartButton();
+		pause(2);
+		CartPage cartPage = productPage.clickCartButton();
 		//Verify info
-		CartPage cartPage = navigateMenu.clickCartButton();
-		ProductInCart productInCart = cartPage.getProductInCart();
+		ProductInCart productInCart = cartPage.getProductInCart("Samsung galaxy s6");
 		Assert.assertEquals(productInCart.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
-		Assert.assertEquals(productInCart.getProductPrice(), "$360", "Incorrect Specification");
+		Assert.assertEquals(productInCart.getProductPrice(), "360", "Incorrect Specification");
 		//Place order
 		Assert.assertTrue(cartPage.isPlaceOrderButtonPresent(), "The Place Order Button wasn't found.");
 		PurchasePage purchasePage = cartPage.clickPlaceOrderButton();
@@ -121,8 +120,7 @@ public class WebSampleTest implements IAbstractTest{
 		purchasePage.clickPurchaseButton();
 		Assert.assertTrue(purchasePage.isGratitudeLabelPresent(), "The purchase wasn't completed");
 		purchasePage.clickOkButton();
-		
+		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
 	}
-
 
 }

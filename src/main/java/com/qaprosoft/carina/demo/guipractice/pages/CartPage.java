@@ -29,6 +29,14 @@ public class CartPage extends AbstractPage {
 
 	public boolean isPlaceOrderButtonPresent() { return placeOrderButton.isPresent(); }
 
-	public ProductInCart getProductInCart() { return (ProductInCart) products;}
+	public ProductInCart getProductInCart(String productString) {
+		for (ProductInCart product : products) {
+			String currentProduct = product.getProductTitle();
+			if (productString.equalsIgnoreCase(currentProduct)) {
+				return product;
+			}
+		}
+		throw new RuntimeException(productString);
+	}
 
 }

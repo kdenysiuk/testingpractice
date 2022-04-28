@@ -66,7 +66,7 @@ public class NavigateMenu extends AbstractUIObject {
 		return logoutButton.isPresent();
 	}
 
-	public Boolean isLogoutButtonClieckable() {
+	public Boolean isLogoutButtonClickable() {
 		return logoutButton.isClickable();
 	}
 
