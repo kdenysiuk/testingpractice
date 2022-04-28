@@ -19,7 +19,7 @@ public class HomePage extends AbstractPage {
 	private NavigateMenu navigateMenu;
 
 	@FindBy(xpath = "//div[contains(@class, 'card ')]")
-	private List<Product> products;
+	private List<ExtendedWebElement> products;
 
 	@FindBy(xpath = "//a[@class = 'list-group-item']")
 	private ExtendedWebElement leftMenu;
@@ -33,10 +33,11 @@ public class HomePage extends AbstractPage {
 	}
 
 	public ProductPage clickProduct(String productString) {
-		for (Product product : products) {
-			String currentProduct = product.getProductTitle();
-			if ((productString).equalsIgnoreCase(currentProduct)) {
-				return product.clickProductTitle();
+		for (ExtendedWebElement product : products) {
+			String currentProduct = product.getText();
+			if (productString.equalsIgnoreCase(currentProduct)) {
+				product.click();
+				return new ProductPage(driver);
 			}
 		}
 		throw new RuntimeException(productString);

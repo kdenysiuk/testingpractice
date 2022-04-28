@@ -10,7 +10,7 @@ import com.qaprosoft.carina.demo.guipractice.pages.ProductPage;
 
 public class Product extends AbstractUIObject {
 
-	@FindBy(xpath = "//h4[@class = 'card-title']/a")
+	@FindBy(xpath = "//div/h2")
 	private ExtendedWebElement productTitle;
 
 	@FindBy(xpath = "//div[@class = 'card-block']/h5")

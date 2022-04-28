@@ -1,16 +1,14 @@
 package com.qaprosoft.carina.demo;
 
 import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.demo.guipractice.pages.LogInPage;
-import com.qaprosoft.carina.demo.guipractice.pages.ProductPage;
+import com.qaprosoft.carina.demo.guipractice.components.ProductInCart;
+import com.qaprosoft.carina.demo.guipractice.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.demo.guipractice.components.NavigateMenu;
-import com.qaprosoft.carina.demo.guipractice.pages.HomePage;
-import com.qaprosoft.carina.demo.guipractice.pages.SignUpPage;
 
 import java.util.Random;
 
@@ -105,9 +103,24 @@ public class WebSampleTest implements IAbstractTest{
 		Assert.assertTrue(productPage.isPresentAddToCartButton(), "The \"Add To Cart\" is not present.");
 		navigateMenu.clickCartButton();
 		//Verify info
+		CartPage cartPage = navigateMenu.clickCartButton();
+		ProductInCart productInCart = cartPage.getProductInCart();
+		Assert.assertEquals(productInCart.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
+		Assert.assertEquals(productInCart.getProductPrice(), "$360", "Incorrect Specification");
+		//Place order
+		Assert.assertTrue(cartPage.isPlaceOrderButtonPresent(), "The Place Order Button wasn't found.");
+		PurchasePage purchasePage = cartPage.clickPlaceOrderButton();
 
-//		Assert.assertEquals(.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
-//		Assert.assertEquals(productPage.getProductPrice(), "$360", "Incorrect Specification");
+		//Fill de fields
+		purchasePage.fillNameField(R.TESTDATA.get("user_name"));
+		purchasePage.fillCountryField(R.TESTDATA.get("user_country"));
+		purchasePage.fillCityField(R.TESTDATA.get("user_city"));
+		purchasePage.fillCardField(R.TESTDATA.get("user_card"));
+		purchasePage.fillMonthField(R.TESTDATA.get("user_month"));
+		purchasePage.fillYearField(R.TESTDATA.get("user_year"));
+		purchasePage.clickPurchaseButton();
+		Assert.assertTrue(purchasePage.isGratitudeLabelPresent(), "The purchase wasn't completed");
+		purchasePage.clickOkButton();
 		
 	}
 

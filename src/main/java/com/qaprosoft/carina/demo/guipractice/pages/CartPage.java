@@ -27,14 +27,8 @@ public class CartPage extends AbstractPage {
 		return new PurchasePage(driver);
 	}
 
-//	public ProductPage clickProduct(String productString) {
-//		for (Product product : products) {
-//			String currentProduct = product.getProductTitle();
-//			if ((productString).equalsIgnoreCase(currentProduct)) {
-//				return product.clickProductTitle();
-//			}
-//		}
-//		throw new RuntimeException(productString);
-//	}
+	public boolean isPlaceOrderButtonPresent() { return placeOrderButton.isPresent(); }
+
+	public ProductInCart getProductInCart() { return (ProductInCart) products;}
 
 }
