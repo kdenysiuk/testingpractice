@@ -20,9 +20,14 @@ public class ProductPage extends AbstractPage {
 	@FindBy(xpath = "//div[@id = 'tbodyid']//div//div/p")
 	private ExtendedWebElement productDescription;
 
+	@FindBy(xpath = "//a[@id = 'cartur']")
+	private ExtendedWebElement cartButton;
+
 	public ProductPage(WebDriver driver) {
 		super(driver);
 	}
+
+	public boolean isPresentAddToCartButton() { return addToCartButton.isPresent(); }
 
 	public void clickAddToCartButton() {
 		addToCartButton.click();
@@ -38,6 +43,11 @@ public class ProductPage extends AbstractPage {
 
 	public String getProductDescription() {
 		return productDescription.getText();
+	}
+
+	public CartPage clickCartButton() {
+		cartButton.click();
+		return new CartPage(driver);
 	}
 
 }

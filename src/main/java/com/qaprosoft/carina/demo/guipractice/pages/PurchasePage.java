@@ -32,6 +32,9 @@ public class PurchasePage extends AbstractPage {
 	@FindBy(xpath = "//*[@class = 'confirm btn btn-lg btn-primary']")
 	private ExtendedWebElement okButton;
 
+	@FindBy(xpath = "//div[10]/h2")
+	private ExtendedWebElement gratitudeLabel;
+
 	public PurchasePage(WebDriver driver) {
 		super(driver);
 	}
@@ -67,5 +70,7 @@ public class PurchasePage extends AbstractPage {
 	public void clickOkButton() {
 		okButton.click();
 	}
+
+	public boolean isGratitudeLabelPresent() {return gratitudeLabel.isPresent();}
 
 }

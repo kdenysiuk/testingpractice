@@ -10,7 +10,7 @@ import com.qaprosoft.carina.demo.guipractice.pages.ProductPage;
 
 public class Product extends AbstractUIObject {
 
-	@FindBy(xpath = "//h4[@class = 'card-title']/a")
+	@FindBy(xpath = "./div/h4")
 	private ExtendedWebElement productTitle;
 
 	@FindBy(xpath = "//div[@class = 'card-block']/h5")
@@ -28,9 +28,9 @@ public class Product extends AbstractUIObject {
 		return productPrice.getText();
 	}
 
-	public ProductPage clickProductTitle() {
+	public void clickProductTitle() {
 		productTitle.click();
-		return new ProductPage(driver);
+		new ProductPage(driver);
 	}
 
 }

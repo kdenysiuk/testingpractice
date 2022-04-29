@@ -2,6 +2,7 @@ package com.qaprosoft.carina.demo.guipractice.pages;
 
 import java.util.List;
 
+import com.qaprosoft.carina.demo.guipractice.components.Product;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -24,6 +25,18 @@ public class CartPage extends AbstractPage {
 	public PurchasePage clickPlaceOrderButton() {
 		placeOrderButton.click();
 		return new PurchasePage(driver);
+	}
+
+	public boolean isPlaceOrderButtonPresent() { return placeOrderButton.isPresent(); }
+
+	public ProductInCart getProductInCart(String productString) {
+		for (ProductInCart product : products) {
+			String currentProduct = product.getProductTitle();
+			if (productString.equalsIgnoreCase(currentProduct)) {
+				return product;
+			}
+		}
+		throw new RuntimeException(productString);
 	}
 
 }

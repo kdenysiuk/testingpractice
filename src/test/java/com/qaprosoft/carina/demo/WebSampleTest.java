@@ -1,121 +1,126 @@
-/*
- * Copyright 2013-2021 QAPROSOFT (http://qaprosoft.com/).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.qaprosoft.carina.demo;
 
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.qaprosoft.carina.core.foundation.utils.R;
+import com.qaprosoft.carina.demo.guipractice.components.ProductInCart;
+import com.qaprosoft.carina.demo.guipractice.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
-import com.zebrunner.agent.core.annotation.TestLabel;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
-import com.qaprosoft.carina.core.foundation.utils.tag.Priority;
-import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
-import com.qaprosoft.carina.demo.gui.components.FooterMenu;
-import com.qaprosoft.carina.demo.gui.components.NewsItem;
-import com.qaprosoft.carina.demo.gui.components.compare.ModelSpecs;
-import com.qaprosoft.carina.demo.gui.components.compare.ModelSpecs.SpecType;
-import com.qaprosoft.carina.demo.gui.pages.BrandModelsPage;
-import com.qaprosoft.carina.demo.gui.pages.CompareModelsPage;
-import com.qaprosoft.carina.demo.gui.pages.HomePage;
-import com.qaprosoft.carina.demo.gui.pages.ModelInfoPage;
-import com.qaprosoft.carina.demo.gui.pages.NewsPage;
+import com.qaprosoft.carina.demo.guipractice.components.NavigateMenu;
 
-/**
- * This sample shows how create Web test.
- *
- * @author qpsdemo
- */
-public class WebSampleTest implements IAbstractTest {
-    @Test()
-    @MethodOwner(owner = "qpsdemo")
-    @TestPriority(Priority.P3)
-    @TestLabel(name = "feature", value = {"web", "regression"})
-    public void testModelSpecs() {
-        // Open GSM Arena home page and verify page is opened
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-        Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
-        
-        //Closing advertising if it's displayed
-        homePage.getWeValuePrivacyAd().closeAdIfPresent();
-        
-        // Select phone brand
-        homePage = new HomePage(getDriver());
-        BrandModelsPage productsPage = homePage.selectBrand("Samsung");
-        // Select phone model
-        ModelInfoPage productInfoPage = productsPage.selectModel("Galaxy A52 5G");
-        // Verify phone specifications
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(productInfoPage.readDisplay(), "6.5\"", "Invalid display info!");
-        softAssert.assertEquals(productInfoPage.readCamera(), "64MP", "Invalid camera info!");
-        softAssert.assertEquals(productInfoPage.readRam(), "6/8GB RAM", "Invalid ram info!");
-        softAssert.assertEquals(productInfoPage.readBattery(), "4500mAh", "Invalid battery info!");
-        softAssert.assertAll();
-    }
+import java.util.Random;
 
+public class WebSampleTest implements IAbstractTest{
+	@Test()
+	@MethodOwner(owner = "kdenysiuk")
+	public void testSignUp() {
+		//Open DemoBlaze homepage and verify
+		HomePage homePage = new HomePage(getDriver());
+		homePage.open();
+		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
+		
+		//Open signup label
+		NavigateMenu navigateMenu = homePage.getNavigateMenu();
+		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
+		Assert.assertTrue(navigateMenu.isSigninButtonPresent(), "The sign in button wasn't found.");
+		SignUpPage signUpPage = navigateMenu.clickSigninButton();
+		
+		//Create an account
+		signUpPage.fillUsernameField(R.TESTDATA.get("user_profile")+ new Random().nextInt());
+		signUpPage.fillPasswordField(R.TESTDATA.get("user_password"));
+		signUpPage.clickSigninButton();
 
-    @Test()
-    @MethodOwner(owner = "qpsdemo")
-    @TestPriority(Priority.P1)
-    @TestLabel(name = "feature", value = {"web", "acceptance"})
-    public void testCompareModels() {
-        // Open GSM Arena home page and verify page is opened
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-        Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
-        // Open model compare page
-        FooterMenu footerMenu = homePage.getFooterMenu();
-        Assert.assertTrue(footerMenu.isUIObjectPresent(2), "Footer menu wasn't found!");
-        CompareModelsPage comparePage = footerMenu.openComparePage();
-        // Compare 3 models
-        List<ModelSpecs> specs = comparePage.compareModels("Samsung Galaxy J3", "Samsung Galaxy J5", "Samsung Galaxy J7 Pro");
-        // Verify model announced dates
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(specs.get(0).readSpec(SpecType.ANNOUNCED), "2016, March 31");
-        softAssert.assertEquals(specs.get(1).readSpec(SpecType.ANNOUNCED), "2015, June 19");
-        softAssert.assertEquals(specs.get(2).readSpec(SpecType.ANNOUNCED), "2017, June");
-        softAssert.assertAll();
-    }
-    
-    @Test()
-    @MethodOwner(owner = "qpsdemo")
-    @TestLabel(name = "feature", value = {"web", "acceptance"})
-    public void testNewsSearch() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-        Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
-        
-        NewsPage newsPage = homePage.getFooterMenu().openNewsPage();
-        Assert.assertTrue(newsPage.isPageOpened(), "News page is not opened!");
-        
-        final String searchQ = "iphone";
-        List<NewsItem> news = newsPage.searchNews(searchQ);
-        Assert.assertFalse(CollectionUtils.isEmpty(news), "News not found!");
-        SoftAssert softAssert = new SoftAssert();
-        for(NewsItem n : news) {
-            System.out.println(n.readTitle());
-            softAssert.assertTrue(StringUtils.containsIgnoreCase(n.readTitle(), searchQ),
-                    "Invalid search results for " + n.readTitle());
-        }
-        softAssert.assertAll();
-    }
+		//Assert of alert label
+		Assert.assertEquals(getDriver().switchTo().alert().getText(), "Sign up successful.", "Alert is wrong");
+		getDriver().switchTo().alert().accept();
+	}
+
+	@Test
+	@MethodOwner(owner = "kdenysiuk")
+	public void testLogInAndLogOut(){
+		//Open DemoBlaze homepage and verify
+		HomePage homePage = new HomePage(getDriver());
+		homePage.open();
+		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
+
+		//Open login label
+		NavigateMenu navigateMenu = homePage.getNavigateMenu();
+		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
+		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The login button wasn't found.");
+		LogInPage logInPage = navigateMenu.clickLogInButton();
+
+		//Log in
+		logInPage.fillUsernameField(R.TESTDATA.get("user_profile"));
+		logInPage.fillPasswordField(R.TESTDATA.get("user_password"));
+		logInPage.clickLoginButton();
+
+		//Assert "Welcome" label and "Log out" button
+		Assert.assertTrue(navigateMenu.isWelcomeLabelPresent(), "The welcome label is not present.");
+		Assert.assertTrue(navigateMenu.isLogoutButtonPresent(), "The log out button is not present.");
+		//the next statement was added because without it, the test crashes saying "log out button is not clickable"
+		Assert.assertTrue(navigateMenu.isLogoutButtonClickable(), "The log out button is not clickable.");
+
+		//Log out
+		navigateMenu.clickLogoutButton();
+		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The log in button is not present.");
+	}
+
+	@Test
+	@MethodOwner(owner = "kdenysiuk")
+	public void testDoAPurchase(){
+		//Open DemoBlaze homepage and verify
+		HomePage homePage = new HomePage(getDriver());
+		homePage.open();
+		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
+
+		//Open login label
+		NavigateMenu navigateMenu = homePage.getNavigateMenu();
+		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
+		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The login button wasn't found.");
+		LogInPage logInPage = navigateMenu.clickLogInButton();
+
+		//Log in
+		logInPage.fillUsernameField(R.TESTDATA.get("user_profile"));
+		logInPage.fillPasswordField(R.TESTDATA.get("user_password"));
+		logInPage.clickLoginButton();
+		homePage.open();
+
+		//Select Product
+		ProductPage productPage = homePage.clickProduct("Samsung galaxy s6");
+		//Verify specifications
+		Assert.assertEquals(productPage.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
+		Assert.assertEquals(productPage.getProductPrice(), "$360 *includes tax", "Incorrect Specification");
+		Assert.assertEquals(productPage.getProductDescription(), "The Samsung Galaxy S6 is powered by 1.5GHz octa-core Samsung Exynos 7420 processor and it comes with 3GB of RAM. The phone packs 32GB of internal storage cannot be expanded.", "Incorrect Specification");
+		//Add to cart
+		Assert.assertTrue(productPage.isPresentAddToCartButton(), "The \"Add To Cart\" is not present.");
+		productPage.clickAddToCartButton();
+		Assert.assertEquals(getDriver().switchTo().alert().getText(), "Product added.", "Alert is wrong");
+		getDriver().switchTo().alert().accept();
+
+		//Go to cart
+		pause(2);
+		CartPage cartPage = productPage.clickCartButton();
+		//Verify info
+		ProductInCart productInCart = cartPage.getProductInCart("Samsung galaxy s6");
+		Assert.assertEquals(productInCart.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
+		Assert.assertEquals(productInCart.getProductPrice(), "360", "Incorrect Specification");
+		//Place order
+		Assert.assertTrue(cartPage.isPlaceOrderButtonPresent(), "The Place Order Button wasn't found.");
+		PurchasePage purchasePage = cartPage.clickPlaceOrderButton();
+
+		//Fill de fields
+		purchasePage.fillNameField(R.TESTDATA.get("user_name"));
+		purchasePage.fillCountryField(R.TESTDATA.get("user_country"));
+		purchasePage.fillCityField(R.TESTDATA.get("user_city"));
+		purchasePage.fillCardField(R.TESTDATA.get("user_card"));
+		purchasePage.fillMonthField(R.TESTDATA.get("user_month"));
+		purchasePage.fillYearField(R.TESTDATA.get("user_year"));
+		purchasePage.clickPurchaseButton();
+		Assert.assertTrue(purchasePage.isGratitudeLabelPresent(), "The purchase wasn't completed");
+		purchasePage.clickOkButton();
+		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
+	}
 
 }

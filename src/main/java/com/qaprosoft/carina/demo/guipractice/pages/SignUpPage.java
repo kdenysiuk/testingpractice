@@ -25,7 +25,7 @@ public class SignUpPage extends AbstractPage {
 		usernameField.type(username);
 	}
 
-	public void fillSigninField(String password) {
+	public void fillPasswordField(String password) {
 		passwordField.type(password);
 	}
 
