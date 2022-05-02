@@ -3,6 +3,8 @@ package com.qaprosoft.carina.demo;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.demo.guipractice.components.ProductInCart;
 import com.qaprosoft.carina.demo.guipractice.pages.*;
+import com.qaprosoft.carina.demo.utils.AuthService;
+import com.qaprosoft.carina.demo.utils.ScreenshotService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,6 +36,8 @@ public class WebSampleTest implements IAbstractTest{
 
 		//Assert of alert label
 		Assert.assertEquals(getDriver().switchTo().alert().getText(), "Sign up successful.", "Alert is wrong");
+		ScreenshotService screen = new ScreenshotService();
+		screen.screenshot();
 		getDriver().switchTo().alert().accept();
 	}
 
@@ -64,30 +68,21 @@ public class WebSampleTest implements IAbstractTest{
 
 		//Log out
 		navigateMenu.clickLogoutButton();
+		ScreenshotService screen = new ScreenshotService();
+		screen.screenshot();
 		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The log in button is not present.");
 	}
 
 	@Test
 	@MethodOwner(owner = "kdenysiuk")
 	public void testDoAPurchase(){
-		//Open DemoBlaze homepage and verify
-		HomePage homePage = new HomePage(getDriver());
-		homePage.open();
-		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
-
-		//Open login label
-		NavigateMenu navigateMenu = homePage.getNavigateMenu();
-		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
-		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The login button wasn't found.");
-		LogInPage logInPage = navigateMenu.clickLogInButton();
-
 		//Log in
-		logInPage.fillUsernameField(R.TESTDATA.get("user_profile"));
-		logInPage.fillPasswordField(R.TESTDATA.get("user_password"));
-		logInPage.clickLoginButton();
-		homePage.open();
+		AuthService login = new AuthService();
+		login.login(R.TESTDATA.get("user_profile"), R.TESTDATA.get("user_password"));
 
 		//Select Product
+		HomePage homePage = new HomePage(getDriver());
+		homePage.open();
 		ProductPage productPage = homePage.clickProduct("Samsung galaxy s6");
 		//Verify specifications
 		Assert.assertEquals(productPage.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
@@ -118,6 +113,8 @@ public class WebSampleTest implements IAbstractTest{
 		purchasePage.fillMonthField(R.TESTDATA.get("user_month"));
 		purchasePage.fillYearField(R.TESTDATA.get("user_year"));
 		purchasePage.clickPurchaseButton();
+		ScreenshotService screen = new ScreenshotService();
+		screen.screenshot();
 		Assert.assertTrue(purchasePage.isGratitudeLabelPresent(), "The purchase wasn't completed");
 		purchasePage.clickOkButton();
 		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
