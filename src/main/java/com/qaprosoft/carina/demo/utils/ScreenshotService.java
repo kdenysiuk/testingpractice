@@ -14,13 +14,12 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
 public class ScreenshotService implements IDriverPool {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public void screenshot(String picname) {
-        File outputfile = new File(picname +".png");
+    public void makeAnScreenshot(String picname) {
+        File outputfile = new File(picname + ".png");
         BufferedImage screenshot = null;
         try {
             screenshot = ImageIO.read(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE));
@@ -31,8 +30,8 @@ public class ScreenshotService implements IDriverPool {
         }
     }
 
-    public void screenshot() {
-        File outputfile = new File("screenshot"+LocalDate.now()+"-"+ LocalTime.now() +".png");
+    public void makeAnScreenshot() {
+        File outputfile = new File("screenshot" + LocalDate.now() + "-" + LocalTime.now() + ".png");
         BufferedImage screenshot = null;
         try {
             screenshot = ImageIO.read(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE));
