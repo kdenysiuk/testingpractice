@@ -3,6 +3,8 @@ package com.qaprosoft.carina.demo;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.demo.guipractice.components.ProductInCart;
 import com.qaprosoft.carina.demo.guipractice.pages.*;
+import com.qaprosoft.carina.demo.utils.AuthService;
+import com.qaprosoft.carina.demo.utils.ScreenshotService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,7 +14,7 @@ import com.qaprosoft.carina.demo.guipractice.components.NavigateMenu;
 
 import java.util.Random;
 
-public class WebSampleTest implements IAbstractTest{
+public class WebSampleTest implements IAbstractTest {
 	@Test()
 	@MethodOwner(owner = "kdenysiuk")
 	public void testSignUp() {
@@ -20,26 +22,27 @@ public class WebSampleTest implements IAbstractTest{
 		HomePage homePage = new HomePage(getDriver());
 		homePage.open();
 		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
-		
+
 		//Open signup label
 		NavigateMenu navigateMenu = homePage.getNavigateMenu();
 		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
 		Assert.assertTrue(navigateMenu.isSigninButtonPresent(), "The sign in button wasn't found.");
 		SignUpPage signUpPage = navigateMenu.clickSigninButton();
-		
+
 		//Create an account
-		signUpPage.fillUsernameField(R.TESTDATA.get("user_profile")+ new Random().nextInt());
+		signUpPage.fillUsernameField(R.TESTDATA.get("user_profile") + new Random().nextInt());
 		signUpPage.fillPasswordField(R.TESTDATA.get("user_password"));
 		signUpPage.clickSigninButton();
 
 		//Assert of alert label
 		Assert.assertEquals(getDriver().switchTo().alert().getText(), "Sign up successful.", "Alert is wrong");
+		new ScreenshotService().makeAnScreenshot();
 		getDriver().switchTo().alert().accept();
 	}
 
 	@Test
 	@MethodOwner(owner = "kdenysiuk")
-	public void testLogInAndLogOut(){
+	public void testLogInAndLogOut() {
 		//Open DemoBlaze homepage and verify
 		HomePage homePage = new HomePage(getDriver());
 		homePage.open();
@@ -64,30 +67,19 @@ public class WebSampleTest implements IAbstractTest{
 
 		//Log out
 		navigateMenu.clickLogoutButton();
+		new ScreenshotService().makeAnScreenshot();
 		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The log in button is not present.");
 	}
 
 	@Test
 	@MethodOwner(owner = "kdenysiuk")
-	public void testDoAPurchase(){
-		//Open DemoBlaze homepage and verify
-		HomePage homePage = new HomePage(getDriver());
-		homePage.open();
-		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
-
-		//Open login label
-		NavigateMenu navigateMenu = homePage.getNavigateMenu();
-		Assert.assertTrue(navigateMenu.isUIObjectPresent(), "The navigate menu wasn't found.");
-		Assert.assertTrue(navigateMenu.isLoginButtonPresent(), "The login button wasn't found.");
-		LogInPage logInPage = navigateMenu.clickLogInButton();
-
+	public void testDoAPurchase() {
 		//Log in
-		logInPage.fillUsernameField(R.TESTDATA.get("user_profile"));
-		logInPage.fillPasswordField(R.TESTDATA.get("user_password"));
-		logInPage.clickLoginButton();
-		homePage.open();
+		new AuthService().login(R.TESTDATA.get("user_profile"), R.TESTDATA.get("user_password"));
 
 		//Select Product
+		HomePage homePage = new HomePage(getDriver());
+		homePage.open();
 		ProductPage productPage = homePage.clickProduct("Samsung galaxy s6");
 		//Verify specifications
 		Assert.assertEquals(productPage.getProductTitle(), "Samsung galaxy s6", "Incorrect Specification");
@@ -118,6 +110,7 @@ public class WebSampleTest implements IAbstractTest{
 		purchasePage.fillMonthField(R.TESTDATA.get("user_month"));
 		purchasePage.fillYearField(R.TESTDATA.get("user_year"));
 		purchasePage.clickPurchaseButton();
+		new ScreenshotService().makeAnScreenshot();
 		Assert.assertTrue(purchasePage.isGratitudeLabelPresent(), "The purchase wasn't completed");
 		purchasePage.clickOkButton();
 		Assert.assertTrue(homePage.isPageOpened(), "The page is not opened");
