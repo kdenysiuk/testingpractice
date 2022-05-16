@@ -3,11 +3,10 @@ package com.qaprosoft.carina.demo.mobilepractice.gui.pages.android;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.demo.mobilepractice.gui.pages.common.AddContactPageBase;
-import com.qaprosoft.carina.demo.mobilepractice.gui.pages.common.HomePageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = HomePageBase.class)
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = AddContactPageBase.class)
 public class AddContactPage extends AddContactPageBase {
 
     @FindBy(xpath = "//android.widget.EditText[@text = 'First name']")
@@ -28,7 +27,7 @@ public class AddContactPage extends AddContactPageBase {
     @FindBy(id = "com.android.contacts:id/photo_icon")
     private ExtendedWebElement photoButton;
 
-    @FindBy(xpath = "//android.widget.ImageButton")
+    @FindBy(xpath = "//android.widget.ImageButton[@content-desc='Cancel']")
     private ExtendedWebElement cancelButton;
 
     public AddContactPage(WebDriver driver) {
