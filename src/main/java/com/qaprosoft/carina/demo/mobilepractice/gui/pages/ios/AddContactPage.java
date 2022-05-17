@@ -9,13 +9,13 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = AddContactPageBase.class)
 public class AddContactPage extends AddContactPageBase {
 
-    @ExtendedFindBy(accessibilityId = "First name")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == 'First name'`]")
     private ExtendedWebElement firstNameField;
 
-    @ExtendedFindBy(accessibilityId = "Last name")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == 'Last name'`]")
     private ExtendedWebElement lastNameField;
 
-    @ExtendedFindBy(accessibilityId = "Company")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == 'Company'`]")
     private ExtendedWebElement companyField;
 
     @ExtendedFindBy(accessibilityId = "Insert add phone")

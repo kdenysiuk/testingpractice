@@ -11,7 +11,7 @@ import java.util.List;
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = HomePageBase.class)
 public class HomePage extends HomePageBase {
 
-    @ExtendedFindBy(accessibilityId = "ContactsListView")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell")
     private List<ExtendedWebElement> contactList;
 
     @ExtendedFindBy (iosClassChain = "**/XCUIElementTypeNavigationBar[`name == 'Contacts'`]")
