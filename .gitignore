@@ -1,6 +1,7 @@
 *.class
 
 .DS_Store
+_config.properties
 
 # Package Files #
 *.jar
